@@ -1,5 +1,4 @@
-IO.gets "Ingrese nombre: "
+IO.gets("Ingrese nombre: ")
 |> String.trim
-|> IO.puts "Hola %{&1}"
-
-# Tiene errores
+|> (&("Hola #{&1}")).()
+|> IO.puts 
