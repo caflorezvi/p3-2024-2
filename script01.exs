@@ -1,0 +1,1 @@
+IO.puts "Bienvenido a los scripts en Elixir"
