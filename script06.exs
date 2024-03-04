@@ -7,6 +7,36 @@ defmodule Apoyo do
   """
 
   @doc """
+  Función para ingresar un número entero desde el teclado (valido que se ingrese un entero)
+
+  ## Parámetros
+
+    - mensaje: String que contiene el texto que se le presenta al usuario
+
+  ## Ejemplos
+
+    iex> Apoyo.ingresar_texto("Ingrese su edad")
+
+    o puede usar
+
+    edad =
+      "Ingrese su edad"
+      |> Apoyo.ingresar_entero()
+  """
+  def ingresar_entero(mensaje) do
+    try do
+      mensaje
+      |> ingresar_texto()
+      |> String.to_integer()
+    rescue
+      IO.puts(stderr, "Error, se espera que ingrese un número entero")
+
+      mensaje
+      |> ingresar_entero()
+    end
+  end
+
+  @doc """
   Función para ingresar un texto desde el teclado
 
   ## Parámetros
@@ -50,11 +80,9 @@ defmodule Apoyo do
   end
 end
 
-# EJEMPLO
+n1 = Apoyo.ingresar_entero("Ingrese su valor n1: ")
+n2 = Apoyo.ingresar_entero("Ingrese su valor n2: ")
 
-nombre =
-  "Ingrese su nombre: "
-  |> Apoyo.ingresar_texto()
+suma = n1 + n2
 
-"Hola #{nombre}"
-|> Apoyo.mostrar_mensaje()
+Apoyo.mostrar_mensaje("La suma de #{n1} con #{n2}  es de #{suma}")

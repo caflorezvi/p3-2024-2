@@ -1,4 +1,5 @@
-IO.gets("Ingrese nombre: ")
-|> String.trim
-|> (&("Hola #{&1}")).()
-|> IO.puts 
+"Ingrese nombre: "
+|> IO.gets()
+|> String.trim()
+|> (&"Hola #{&1}").()
+|> IO.puts()

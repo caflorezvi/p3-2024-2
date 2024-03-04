@@ -1,4 +1,6 @@
-nombre = IO.gets "Ingrese nombre: "
-|> String.trim
+nombre =
+  "Ingrese nombre: "
+  |> IO.gets()
+  |> String.trim()
 
-IO.puts "Hola #{nombre}"
+IO.puts("Hola #{nombre}")
