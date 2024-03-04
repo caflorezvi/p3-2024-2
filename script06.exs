@@ -29,10 +29,11 @@ defmodule Apoyo do
       |> ingresar_texto()
       |> String.to_integer()
     rescue
-      IO.puts(stderr, "Error, se espera que ingrese un número entero")
+      ArgumentError ->
+        IO.puts(:standard_error, "Error, se espera que ingrese un número entero")
 
-      mensaje
-      |> ingresar_entero()
+        mensaje
+        |> ingresar_entero()
     end
   end
 
