@@ -15,12 +15,12 @@ defmodule Apoyo do
 
   ## Ejemplos
 
-    iex> Apoyo.ingresar_texto("Ingrese su edad")
+    iex> Apoyo.ingresar_entero("Ingrese su edad: ")
 
     o puede usar
 
     edad =
-      "Ingrese su edad"
+      "Ingrese su edad: "
       |> Apoyo.ingresar_entero()
   """
   def ingresar_entero(mensaje) do

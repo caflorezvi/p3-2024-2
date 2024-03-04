@@ -3,4 +3,5 @@ nombre =
   |> IO.gets()
   |> String.trim()
 
-IO.puts("Hola #{nombre}")
+"Hola #{nombre}"
+|> IO.puts()

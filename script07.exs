@@ -7,7 +7,7 @@ defmodule Apoyo do
   """
 
   @doc """
-  Función para ingresar un número entero desde el teclado (valido que se ingrese un entero)
+  Función para ingresar un dato desde el teclado (valido que se ingrese un dato válido)
 
   ## Parámetros
 
@@ -15,30 +15,46 @@ defmodule Apoyo do
 
   ## Ejemplos
 
-    iex> Apoyo.ingresar_entero("Ingrese su edad: ")
+    iex> Apoyo.ingresar("Ingrese su edad: ", :entero)
+    iex> Apoyo.ingresar("Ingrese su altura: ", :real)
+    iex> Apoyo.ingresar("Ingrese su nombre: ", :texto)
+    iex> Apoyo.ingresar("Ingrese su nombre: ")
 
-    o puede usar
+  o puede usar 
 
-    edad =
-      "Ingrese su edad: "
-      |> Apoyo.ingresar_entero()
+    "Ingrese su edad: "
+    |> Apoyo.ingresar(:entero)
+
+    ...
+
   """
-  def ingresar_entero(mensaje) do
+  def ingresar(mensaje, :entero),
+    do: ingresar(mensaje, &String.to_integer/1, "Error, se espera que ingrese un número entero\n")
+
+  def ingresar(mensaje, :real),
+    do: ingresar(mensaje, &String.to_float/1, "Error, se espera que ingrese un número real\n")
+
+  def ingresar(mensaje, :texto), do: ingresar_texto(mensaje)
+
+  @doc """
+  Función privada que permite leer un dato del teclado de forma parametrizada
+
+  ## Parámetros
+    - parser: función que se aplica al texto ingresado por usuario para su conversión al dato de interés (o la función identidad)
+    - mensaje: String que contiene el texto que se le presenta al usuario
+  """
+  defp ingresar(mensaje, parser, mensaje_error) do
     try do
-      mensaje
-      |> ingresar_texto()
-      |> String.to_integer()
+      mensaje |> ingresar_texto() |> parser.()
     rescue
       ArgumentError ->
-        mostrar_error("Error, se espera que ingrese un número entero\n")
-
-        mensaje
-        |> ingresar_entero()
+        IO.puts(:standard_error, mensaje_error)
+        ingresar(mensaje, parser,  mensaje_error)
     end
   end
 
   @doc """
-  Función para ingresar un texto desde el teclado
+  Función privada para ingresar un texto desde el teclado
 
   ## Parámetros
 
@@ -53,7 +69,7 @@ defmodule Apoyo do
     "Ingrese su nombre"
     |> Apoyo.ingresar_texto()
   """
-  def ingresar_texto(mensaje) do
+  defp ingresar_texto(mensaje) do
     mensaje
     |> IO.gets()
     |> String.trim()
@@ -105,11 +121,11 @@ end
 
 n1 =
   "Ingrese su valor n1: "
-  |> Apoyo.ingresar_entero()
+  |> Apoyo.ingresar(:entero)
 
 n2 =
   "Ingrese su valor n2: "
-  |> Apoyo.ingresar_entero()
+  |> Apoyo.ingresar(:entero)
 
 suma = n1 + n2
 
