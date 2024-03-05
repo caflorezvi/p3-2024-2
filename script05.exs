@@ -7,45 +7,34 @@ defmodule Apoyo do
   """
 
   @doc """
-  Función para ingresar un número entero desde el teclado
+  Función para ingresar un dato desde el teclado 
 
   ## Parámetros
 
     - mensaje: String que contiene el texto que se le presenta al usuario
+    - :texto, para indicar que se desea ingresar una cadena de texto 
+              (importante para futuros tipos de datos) o
+    - :entero si lo que se desea ingresar es un número entero
 
   ## Ejemplos
 
-    iex> Apoyo.ingresar_entero("Ingrese su edad: ")
+    iex> Apoyo.ingresar("Ingrese su edad: ", :entero)
+    iex> Apoyo.ingresar("Ingrese su nombre: ", :texto)
 
-    o puede usar
+  o puede usar 
 
-    edad =
-      "Ingrese su edad: "
-      |> Apoyo.ingresar_entero()
+    "Ingrese su edad: "
+    |> Apoyo.ingresar(:entero)
+
+    ...
   """
-  def ingresar_entero(mensaje) do
+  def ingresar(mensaje, :entero) do
     mensaje
-    |> ingresar_texto()
+    |> ingresar(:texto)
     |> String.to_integer()
   end
 
-  @doc """
-  Función para ingresar un texto desde el teclado
-
-  ## Parámetros
-
-    - mensaje: String que contiene el texto que se le presenta al usuario
-
-  ## Ejemplos
-
-    iex> Apoyo.ingresar_texto("Ingrese su nombre")
-
-    o puede usar
-
-    "Ingrese su nombre"
-    |> Apoyo.ingresar_texto()
-  """
-  def ingresar_texto(mensaje) do
+  def ingresar(mensaje, :texto) do
     mensaje
     |> IO.gets()
     |> String.trim()
@@ -73,18 +62,21 @@ defmodule Apoyo do
   end
 end
 
-
 # EJEMPLO
+
+nombre = 
+  "Ingrese su nombre: "
+  |> Apoyo.ingresar(:texto)
 
 n1 =
   "Ingrese su valor n1: "
-  |> Apoyo.ingresar_entero()
+  |> Apoyo.ingresar(:entero)
 
 n2 =
   "Ingrese su valor n2: "
-  |> Apoyo.ingresar_entero()
+  |> Apoyo.ingresar(:entero)
 
 suma = n1 + n2
 
-"La suma de #{n1} con #{n2}  es de #{suma}"
+"Hola #{nombre}, la suma de #{n1} con #{n2}  es de #{suma}"
 |> Apoyo.mostrar_mensaje()

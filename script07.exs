@@ -28,51 +28,32 @@ defmodule Apoyo do
     ...
 
   """
+  def ingresar(mensaje, :texto) do
+    mensaje
+    |> IO.gets()
+    |> String.trim()
+  end
+
   def ingresar(mensaje, :entero),
     do: ingresar(mensaje, &String.to_integer/1, "Error, se espera que ingrese un número entero\n")
 
   def ingresar(mensaje, :real),
     do: ingresar(mensaje, &String.to_float/1, "Error, se espera que ingrese un número real\n")
 
-  def ingresar(mensaje, :texto), do: ingresar_texto(mensaje)
-
-  @doc """
-  Función privada que permite leer un dato del teclado de forma parametrizada
-
-  ## Parámetros
-    - parser: función que se aplica al texto ingresado por usuario para su conversión al dato de interés (o la función identidad)
-    - mensaje: String que contiene el texto que se le presenta al usuario
-  """
+  # Función privada de apoyo para crear la lectura con validación de enteros y reales.
   defp ingresar(mensaje, parser, mensaje_error) do
     try do
-      mensaje |> ingresar_texto() |> parser.()
+      mensaje
+      |> ingresar(:texto)
+      |> parser.()
     rescue
       ArgumentError ->
-        IO.puts(:standard_error, mensaje_error)
-        ingresar(mensaje, parser,  mensaje_error)
+        "Error, se espera que ingrese un número entero\n"
+        |> mostrar_error()
+
+        mensaje
+        |> ingresar(parser, mensaje_error)
     end
-  end
-
-  @doc """
-  Función privada para ingresar un texto desde el teclado
-
-  ## Parámetros
-
-    - mensaje: String que contiene el texto que se le presenta al usuario
-
-  ## Ejemplos
-
-    iex> Apoyo.ingresar_texto("Ingrese su nombre")
-
-    o puede usar
-
-    "Ingrese su nombre"
-    |> Apoyo.ingresar_texto()
-  """
-  defp ingresar_texto(mensaje) do
-    mensaje
-    |> IO.gets()
-    |> String.trim()
   end
 
   @doc """
@@ -119,6 +100,14 @@ end
 
 # EJEMPLO
 
+nombre =
+  "Ingrese su nombre: "
+  |> Apoyo.ingresar(:texto)
+
+altura =
+  "Ingrese su altura en metros: "
+  |> Apoyo.ingresar(:real)
+
 n1 =
   "Ingrese su valor n1: "
   |> Apoyo.ingresar(:entero)
@@ -129,5 +118,5 @@ n2 =
 
 suma = n1 + n2
 
-"La suma de #{n1} con #{n2}  es de #{suma}"
+"Hola #{nombre}, su altura es de #{altura} y la suma de #{n1} con #{n2}  es de #{suma}"
 |> Apoyo.mostrar_mensaje()

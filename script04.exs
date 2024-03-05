@@ -11,18 +11,20 @@ defmodule Apoyo do
 
   ## Parámetros
 
-    - mensaje: String que contiene el texto que se le presenta al usuario
+    - mensaje, String que contiene el texto que se le presenta al usuario
+    - :texto, para indicar que se desea ingresar una cadena de texto 
+              (importante para futuros tipos de datos) 
 
   ## Ejemplos
 
-    iex> Apoyo.ingresar_texto("Ingrese su nombre")
+    iex> Apoyo.ingresar("Ingrese su nombre", :texto)
 
     o puede usar
 
     "Ingrese su nombre"
-    |> Apoyo.ingresar_texto()
+    |> Apoyo.ingresar(:texto)
   """
-  def ingresar_texto(mensaje) do
+  def ingresar(mensaje, :texto) do
     mensaje
     |> IO.gets()
     |> String.trim()
@@ -54,7 +56,7 @@ end
 
 nombre =
   "Ingrese su nombre: "
-  |> Apoyo.ingresar_texto()
+  |> Apoyo.ingresar(:texto)
 
 "Hola #{nombre}"
 |> Apoyo.mostrar_mensaje()

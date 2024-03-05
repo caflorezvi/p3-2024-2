@@ -7,19 +7,18 @@ defmodule Apoyo do
   """
 
   @doc """
-  Función para ingresar un dato desde el teclado 
+  Función para ingresar un dato desde el teclado (valido que se ingrese un dato válido)
 
   ## Parámetros
 
     - mensaje: String que contiene el texto que se le presenta al usuario
-    - :texto, para indicar que se desea ingresar una cadena de texto 
-              (importante para futuros tipos de datos) o
-    - :entero si lo que se desea ingresar es un número entero
 
   ## Ejemplos
 
     iex> Apoyo.ingresar("Ingrese su edad: ", :entero)
+    iex> Apoyo.ingresar("Ingrese su altura: ", :real)
     iex> Apoyo.ingresar("Ingrese su nombre: ", :texto)
+    iex> Apoyo.ingresar("Ingrese su nombre: ")
 
   o puede usar 
 
@@ -27,26 +26,34 @@ defmodule Apoyo do
     |> Apoyo.ingresar(:entero)
 
     ...
+
   """
-  def ingresar(mensaje, :entero) do
+  def ingresar(mensaje, :texto) do
+    mensaje
+    |> IO.gets()
+    |> String.trim()
+  end
+
+  def ingresar(mensaje, :entero),
+    do: ingresar(mensaje, &String.to_integer/1, "Error, se espera que ingrese un número entero\n")
+
+  def ingresar(mensaje, :real),
+    do: ingresar(mensaje, &String.to_float/1, "Error, se espera que ingrese un número real\n")
+
+  # Función privada de apoyo para crear la lectura con validación de enteros y reales.
+  defp ingresar(mensaje, parser, mensaje_error) do
     try do
       mensaje
       |> ingresar(:texto)
-      |> String.to_integer()
+      |> parser.()
     rescue
       ArgumentError ->
         "Error, se espera que ingrese un número entero\n"
         |> mostrar_error()
 
         mensaje
-        |> ingresar(:entero)
+        |> ingresar(parser, mensaje_error)
     end
-  end
-
-  def ingresar(mensaje, :texto) do
-    mensaje
-    |> IO.gets()
-    |> String.trim()
   end
 
   @doc """
@@ -90,24 +97,3 @@ defmodule Apoyo do
     IO.puts(:standard_error, mensaje)
   end
 end
-
-# EJEMPLO
-
-# EJEMPLO
-
-nombre =
-  "Ingrese su nombre: "
-  |> Apoyo.ingresar(:texto)
-
-n1 =
-  "Ingrese su valor n1: "
-  |> Apoyo.ingresar(:entero)
-
-n2 =
-  "Ingrese su valor n2: "
-  |> Apoyo.ingresar(:entero)
-
-suma = n1 + n2
-
-"Hola #{nombre}, la suma de #{n1} con #{n2}  es de #{suma}"
-|> Apoyo.mostrar_mensaje()
