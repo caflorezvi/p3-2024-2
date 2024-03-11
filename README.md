@@ -372,10 +372,10 @@ You can also run your app inside IEx (Interactive Elixir) as:
     $ iex -S mix phx.server
 ```
 
-Observe que por defecto, se requiere de la base de datos llamada **PostgreSQL**, aunque es posible configurar Elixir para cambiar de motor de bases de datos, o incluso crear un proyecto web que no requiera base de datos.
+Observe que por defecto, se requiere de la base de datos llamada **PostgreSQL**, aunque es posible configurar Elixir para cambiar de motor de bases de datos (uso de **--database**), o incluso crear un proyecto web que no requiera base de datos.
 
 
-## Creando un nuevo proyecto **Phoenix** (que no necesata de un motor de bases de datos)
+## Creando un nuevo proyecto **Phoenix** (que no necesita de un motor de bases de datos)
 
 
 ```shell
@@ -427,6 +427,51 @@ Fetch and install dependencies? [Yn]
 We are almost there! The following steps are missing:
 
     $ cd ejeweb2
+
+Start your Phoenix app with:
+
+    $ mix phx.server
+
+You can also run your app inside IEx (Interactive Elixir) as:
+
+    $ iex -S mix phx.server
+```
+
+Ahora ya tiene una aplicación web de ejemplo hecha en Elixir.
+
+
+## Creando un nuevo proyecto **Phoenix** totalmente en blanco y que no necesita de bases de datos
+
+
+```shell
+mix phx.new ejeweb3 --no-assets --no-dashboard --no-ecto --no-esbuild --no-gettext --no-html --no-live --no-mailer --no-tailwind
+```
+
+```shell
+* creating ejeweb3/lib/ejeweb3/application.ex
+* creating ejeweb3/lib/ejeweb3.ex
+* creating ejeweb3/lib/ejeweb3_web/controllers/error_json.ex
+* creating ejeweb3/lib/ejeweb3_web/endpoint.ex
+* creating ejeweb3/lib/ejeweb3_web/router.ex
+* creating ejeweb3/lib/ejeweb3_web/telemetry.ex
+* creating ejeweb3/lib/ejeweb3_web.ex
+* creating ejeweb3/mix.exs
+* creating ejeweb3/README.md
+* creating ejeweb3/.formatter.exs
+* creating ejeweb3/.gitignore
+* creating ejeweb3/test/support/conn_case.ex
+* creating ejeweb3/test/test_helper.exs
+* creating ejeweb3/test/ejeweb3_web/controllers/error_json_test.exs
+* creating ejeweb3/priv/static/robots.txt
+* creating ejeweb3/priv/static/favicon.ico
+
+Fetch and install dependencies? [Yn] 
+* running mix deps.get
+* running mix deps.compile
+
+We are almost there! The following steps are missing:
+
+    $ cd ejeweb3
 
 Start your Phoenix app with:
 
