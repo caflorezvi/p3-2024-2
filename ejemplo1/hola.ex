@@ -1,7 +1,12 @@
 defmodule Saludo do
-  def hola(nombre) do
-    IO.puts "Hola " <> nombre
+  def hola() do
+    IO.puts "Hola " <> leerNombre()
   end
+
+  def leerNombre do
+    IO.gets "Escribe tu nombre: "
+  end
+
 end
 
-Saludo.hola("Pepito")
+Saludo.hola()
