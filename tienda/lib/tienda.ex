@@ -14,8 +14,14 @@ defmodule Tienda do
     buscar_producto_recursivo(tienda.productos, nombre)
   end
 
-  defp buscar_producto_recursivo([producto | _resto], nombre) when producto.nombre == nombre, do: producto
-  defp buscar_producto_recursivo([_producto | resto], nombre), do: buscar_producto_recursivo(resto, nombre)
+  defp buscar_producto_recursivo([producto | rest], nombre) do
+    if producto.nombre == nombre do
+      producto
+    else
+      buscar_producto_recursivo(rest, nombre)
+    end
+  end
+
   defp buscar_producto_recursivo([], _nombre), do: nil
 
   def inicializar() do
