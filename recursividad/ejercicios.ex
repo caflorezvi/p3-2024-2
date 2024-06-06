@@ -65,13 +65,38 @@ defmodule MenorArreglo do
 
 end
 
+defmodule Multiplicacion do
+
+  def multiplicar(0, _b), do: 0
+  def multiplicar(_a, 0), do: 0
+
+  def multiplicar(a, b) do
+    a + multiplicar(a, b-1)
+  end
+
+end
+
+defmodule Division do
+
+  def dividir(_a, 0), do: {:error, "La división es indeterminada"}
+
+  def dividir(a, b) when a < b do
+    0
+  end
+
+  def dividir(a, b) do
+    1 + dividir(a-b, b)
+  end
+
+end
+
 defmodule Main do
   def run do
 
-    case MenorArreglo.obtener_menor( [1, 2, 0, -1, 10, -90, 100] ) do
+    case Division.dividir( 80, 2 ) do
 
       {:error, mensaje} -> IO.puts mensaje
-      menor -> IO.puts "El número menor de la lista es: #{menor}"
+      menor -> IO.puts "El resultado es: #{menor}"
 
     end
 
