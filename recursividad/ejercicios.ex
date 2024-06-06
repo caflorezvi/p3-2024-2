@@ -21,7 +21,11 @@ defmodule Main do
     user_input = IO.gets("> ")
 
     n = String.trim(user_input) |> String.to_integer()
-    IO.puts Fibonacci.calcular_fibonacci(n) # 55
+
+    case Fibonacci.calcular_fibonacci(n) do
+      {:error, message} -> IO.puts(message)
+      result -> IO.puts("El resultado es: #{result}")
+    end
 
   end
 
