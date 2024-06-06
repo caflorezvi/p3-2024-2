@@ -168,13 +168,36 @@ defmodule PalindromaLista do
 
 end
 
+defmodule NumeroPerfecto do
+
+  def es_perfecto?(numero) when numero <= 0, do: false
+
+  def es_perfecto?(numero) do
+    sumar_divisores(numero, div(numero, 2)) == numero
+  end
+
+  defp sumar_divisores(_numero, 0), do: 0
+
+  defp sumar_divisores(numero, divisor) do
+    if rem(numero, divisor) == 0 do
+      divisor + sumar_divisores(numero, divisor-1)
+    else
+      sumar_divisores(numero, divisor-1)
+    end
+  end
+
+end
+
 defmodule Main do
   def run do
 
-    IO.puts("Ingrese una frase: ")
-    frase = IO.gets("> ") |> String.trim()
+    IO.puts("Ingrese un número positivo: ")
+    numero = IO.gets("> ") |> String.trim()
 
-    IO.puts PalindromaLista.validar_cadena(frase)
+    case Integer.parse(numero) do
+      :error -> IO.puts("Debe ingresar un número entero")
+      {valor, _} -> IO.puts NumeroPerfecto.es_perfecto?(valor)
+    end
 
   end
 
