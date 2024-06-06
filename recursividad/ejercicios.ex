@@ -141,13 +141,40 @@ defmodule Palindroma do
 
 end
 
+defmodule PalindromaLista do
+
+  def validar_cadena(cadena) do
+
+    normalizada = cadena
+                  |> String.downcase()
+                  |> String.replace(" ", "")
+                  |> String.to_charlist()
+
+    es_palindroma?(normalizada)
+  end
+
+  defp es_palindroma?([]), do: true
+  defp es_palindroma?([_]), do: true
+
+  defp es_palindroma?( [cabeza | cola] ) do
+
+    if cabeza == List.last(cola) do
+      es_palindroma?( List.delete_at( cola, length(cola)-1 ) )
+    else
+      false
+    end
+
+  end
+
+end
+
 defmodule Main do
   def run do
 
     IO.puts("Ingrese una frase: ")
     frase = IO.gets("> ") |> String.trim()
 
-    IO.puts Palindroma.validar_cadena(frase)
+    IO.puts PalindromaLista.validar_cadena(frase)
 
   end
 
