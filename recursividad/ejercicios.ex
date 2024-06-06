@@ -63,6 +63,10 @@ defmodule MenorArreglo do
 
   defp obtener_menor([], menor), do: menor
 
+  def obtener_menor_bib(lista) do
+    Enum.min(lista)
+  end
+
 end
 
 defmodule Multiplicacion do
@@ -107,16 +111,21 @@ defmodule Lista do
 
   def contar_repeticiones([], _numero), do: 0
 
+  def contar_repeticiones_bib(lista, numero) do
+    Enum.count(lista, fn x -> x == numero end)
+  end
+
 end
 
 defmodule Main do
   def run do
 
-    contador = Lista.contar_repeticiones( [1,2,2,3,5], 3 )
+    numero = 3
+    contador = Lista.contar_repeticiones_bib( [1,2,2,3,5], numero )
 
     case contador do
-      1 -> IO.puts "El número 2 se repite 1 vez"
-      _ -> IO.puts "El número 2 se repite #{contador} veces"
+      1 -> IO.puts "El número #{numero} se repite 1 vez"
+      _ -> IO.puts "El número #{numero} se repite #{contador} veces"
     end
 
   end
