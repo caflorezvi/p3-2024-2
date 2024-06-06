@@ -20,11 +20,13 @@ defmodule Main do
     IO.puts("Introduce un número entero:")
     user_input = IO.gets("> ")
 
-    n = String.trim(user_input) |> String.to_integer()
-
-    case Fibonacci.calcular_fibonacci(n) do
-      {:error, message} -> IO.puts(message)
-      result -> IO.puts("El resultado es: #{result}")
+    case Integer.parse(user_input) do
+      :error -> IO.puts("Debes introducir un número entero")
+      {n, _} ->
+        case Fibonacci.calcular_fibonacci(n) do
+          {:error, message} -> IO.puts(message)
+          result -> IO.puts("El resultado es: #{result}")
+        end
     end
 
   end
