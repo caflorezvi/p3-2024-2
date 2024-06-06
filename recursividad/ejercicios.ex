@@ -80,12 +80,17 @@ defmodule Division do
 
   def dividir(_a, 0), do: {:error, "La división es indeterminada"}
 
-  def dividir(a, b) when a < b do
-    0
+  def dividir(a, b) do
+    {respuesta, residuo} = dividir(a, b, 0)
+    {respuesta, residuo}
   end
 
-  def dividir(a, b) do
-    1 + dividir(a-b, b)
+  defp dividir(a, b, suma) when a < b do
+    {suma, a}
+  end
+
+  defp dividir(a, b, suma) do
+    dividir(a-b, b, suma+1)
   end
 
 end
@@ -93,10 +98,10 @@ end
 defmodule Main do
   def run do
 
-    case Division.dividir( 80, 2 ) do
+    case Division.dividir( 11, 2 ) do
 
       {:error, mensaje} -> IO.puts mensaje
-      menor -> IO.puts "El resultado es: #{menor}"
+      {cociente, residuo} -> IO.puts "Cociente: #{cociente}, Residuo: #{residuo}"
 
     end
 
