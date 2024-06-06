@@ -14,4 +14,17 @@ defmodule Fibonacci do
 
 end
 
-IO.puts Fibonacci.calcular_fibonacci(10) # 55
+defmodule Main do
+  def run do
+
+    IO.puts("Introduce un número entero:")
+    user_input = IO.gets("> ")
+
+    n = String.trim(user_input) |> String.to_integer()
+    IO.puts Fibonacci.calcular_fibonacci(n) # 55
+
+  end
+
+end
+
+Main.run()
