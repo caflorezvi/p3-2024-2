@@ -35,6 +35,17 @@ defmodule FibonacciMejorado do
 end
 
 
+defmodule Factorial do
+
+  def calcular_factorial(0), do: 1
+  def calcular_factorial(1), do: 1
+
+  def calcular_factorial(n) do
+    n * calcular_factorial(n-1)
+  end
+
+end
+
 defmodule Main do
   def run do
 
@@ -44,7 +55,7 @@ defmodule Main do
     case Integer.parse(user_input) do
       :error -> IO.puts("Debes introducir un número entero")
       {n, _} ->
-        case FibonacciMejorado.calcular_fibonacci(n) do
+        case Factorial.calcular_factorial(n) do
           {:error, message} -> IO.puts(message)
           result -> IO.puts("El resultado es: #{result}")
         end
