@@ -53,12 +53,12 @@ defmodule MenorArreglo do
     obtener_menor(cola, cabeza)
   end
 
-  defp obtener_menor([cabeza | cola], menor) do
-    if cabeza < menor do
-      obtener_menor(cola, cabeza)
-    else
-      obtener_menor(cola, menor)
-    end
+  defp obtener_menor([cabeza | cola], menor) when cabeza < menor do
+    obtener_menor(cola, cabeza)
+  end
+
+  defp obtener_menor([_cabeza | cola], menor) do
+    obtener_menor(cola, menor)
   end
 
   defp obtener_menor([], menor), do: menor
