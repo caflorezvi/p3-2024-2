@@ -95,14 +95,28 @@ defmodule Division do
 
 end
 
+defmodule Lista do
+
+  def contar_repeticiones([cabeza | cola], numero) do
+    if cabeza == numero do
+      1 + contar_repeticiones(cola, numero)
+    else
+      contar_repeticiones(cola, numero)
+    end
+  end
+
+  def contar_repeticiones([], _numero), do: 0
+
+end
+
 defmodule Main do
   def run do
 
-    case Division.dividir( 11, 2 ) do
+    contador = Lista.contar_repeticiones( [1,2,2,3,5], 3 )
 
-      {:error, mensaje} -> IO.puts mensaje
-      {cociente, residuo} -> IO.puts "Cociente: #{cociente}, Residuo: #{residuo}"
-
+    case contador do
+      1 -> IO.puts "El número 2 se repite 1 vez"
+      _ -> IO.puts "El número 2 se repite #{contador} veces"
     end
 
   end
