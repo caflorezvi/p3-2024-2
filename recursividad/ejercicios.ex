@@ -7,7 +7,7 @@ defmodule Fibonacci do
   def calcular_fibonacci(0), do: 0
   def calcular_fibonacci(1), do: 1
 
-  def calcular_fibonacci(n) when n > 1 do
+  def calcular_fibonacci(n) do
     calcular_fibonacci(n - 1) + calcular_fibonacci(n - 2)
   end
 
@@ -34,7 +34,6 @@ defmodule FibonacciMejorado do
 
 end
 
-
 defmodule Factorial do
 
   def calcular_factorial(0), do: 1
@@ -46,19 +45,34 @@ defmodule Factorial do
 
 end
 
+defmodule MenorArreglo do
+
+  def obtener_menor([]), do: {:error, "La lista está vacía"}
+
+  def obtener_menor( [cabeza | cola] ) do
+    obtener_menor(cola, cabeza)
+  end
+
+  defp obtener_menor([cabeza | cola], menor) do
+    if cabeza < menor do
+      obtener_menor(cola, cabeza)
+    else
+      obtener_menor(cola, menor)
+    end
+  end
+
+  defp obtener_menor([], menor), do: menor
+
+end
+
 defmodule Main do
   def run do
 
-    IO.puts("Introduce un número entero:")
-    user_input = IO.gets("> ")
+    case MenorArreglo.obtener_menor( [1, 2, 0, -1, 10, -90, 100] ) do
 
-    case Integer.parse(user_input) do
-      :error -> IO.puts("Debes introducir un número entero")
-      {n, _} ->
-        case Factorial.calcular_factorial(n) do
-          {:error, message} -> IO.puts(message)
-          result -> IO.puts("El resultado es: #{result}")
-        end
+      {:error, mensaje} -> IO.puts mensaje
+      menor -> IO.puts "El número menor de la lista es: #{menor}"
+
     end
 
   end
