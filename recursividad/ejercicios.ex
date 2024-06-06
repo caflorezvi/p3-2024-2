@@ -117,16 +117,37 @@ defmodule Lista do
 
 end
 
+defmodule Palindroma do
+
+  def validar_cadena(cadena) do
+    normalizada = cadena
+                  |> String.downcase()
+                  |> String.replace(" ", "")
+
+    es_palindroma?(normalizada, 0, String.length(normalizada) - 1)
+  end
+
+  defp es_palindroma?(cadena, i, j) do
+    if i >= j do
+      true
+    else
+      if String.at(cadena, i) == String.at(cadena, j) do
+        es_palindroma?(cadena, i+1, j-1)
+      else
+        false
+      end
+    end
+  end
+
+end
+
 defmodule Main do
   def run do
 
-    numero = 3
-    contador = Lista.contar_repeticiones_bib( [1,2,2,3,5], numero )
+    IO.puts("Ingrese una frase: ")
+    frase = IO.gets("> ") |> String.trim()
 
-    case contador do
-      1 -> IO.puts "El número #{numero} se repite 1 vez"
-      _ -> IO.puts "El número #{numero} se repite #{contador} veces"
-    end
+    IO.puts Palindroma.validar_cadena(frase)
 
   end
 
