@@ -37,16 +37,12 @@ defmodule ListaNumeros do
   end
 
   @doc """
-    Función que convierte una lista de números enteros a binario.
+    Función que convierte una lista de números enteros a binario, usando Enum.map que recorre la lista y aplica la función convertir_binario a cada elemento.
   """
   def convertir_numeros(lista) do
-    convertir_numeros(lista, [])
-  end
-
-  defp convertir_numeros([], respuesta), do: respuesta
-
-  defp convertir_numeros([cabeza | cola], respuesta) do
-    convertir_numeros( cola, [ convertir_binario(cabeza) | respuesta ] )
+    lista
+    |>Enum.map(&convertir_binario/1)
+    |> Enum.reverse()
   end
 
   defp convertir_binario(0), do: 0
