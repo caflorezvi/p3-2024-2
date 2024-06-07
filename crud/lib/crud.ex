@@ -6,10 +6,14 @@ defmodule Crud do
   end
 
   def crear_persona(id, nombre, edad) do
-    Agent.update( __MODULE__, fn personas ->
-      persona = %Persona{ nombre: nombre, edad: edad}
-      Map.put( personas, id, persona )
-    end )
+    Agent.get_and_update( __MODULE__, fn personas ->
+      if !Map.has_key?(personas, id) do
+        persona = %Persona{ nombre: nombre, edad: edad}
+        {:ok, Map.put( personas, id, persona ) }
+      else
+        {:error, personas}
+      end
+    end)
   end
 
   def leer_persona(id) do
@@ -21,11 +25,23 @@ defmodule Crud do
   end
 
   def eliminar_persona(id) do
-    Agent.update( __MODULE__, &( Map.delete(&1, id)) )
+    Agent.get_and_update( __MODULE__, fn personas ->
+      if Map.has_key?(personas, id) do
+        {:ok, Map.delete(personas, id) }
+      else
+        {:error, personas}
+      end
+    end)
   end
 
   def actualizar_persona(id, nombre, edad) do
-    Agent.update( __MODULE__, &( Map.update(&1, id, nil, fn persona -> %{persona | nombre: nombre, edad: edad} end ) ) )
+    Agent.get_and_update( __MODULE__, fn personas ->
+      if Map.has_key?(personas, id) do
+        {:ok, Map.update(personas, id, nil, fn persona -> %{persona | nombre: nombre, edad: edad} end ) }
+      else
+        {:error, personas}
+      end
+    end)
   end
 
 end

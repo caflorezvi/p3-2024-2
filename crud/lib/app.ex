@@ -1,22 +1,22 @@
 # Inicia el agente
-Crud.start_link([])
+CrudInterface.iniciar()
 
 # Crear personas
-Crud.crear_persona("123", "Alice", 30)
-Crud.crear_persona("456", "Bob", 25)
-Crud.crear_persona("678", "Carlos", 30)
+CrudInterface.crear("123", "Alice", 30)
+CrudInterface.crear("456", "Bob", 25)
+CrudInterface.crear("678", "Carlos", 30)
 
 # Leer todas las personas
-IO.inspect(Crud.leer_personas())
+IO.inspect(CrudInterface.listar(), label: "Personas después de la creación")
 
 # Actualizar una persona por ID
-Crud.actualizar_persona("123", "Alice", 31)
+CrudInterface.actualizar("123", "Alice", 31)
 
 # Leer todas las personas
-IO.inspect(Crud.leer_personas())
+IO.inspect(CrudInterface.listar(), label: "Personas después de la actualización")
 
 # Eliminar una persona por ID
-Crud.eliminar_persona("123")
+CrudInterface.eliminar("123")
 
 # Leer todas las personas
-IO.inspect(Crud.leer_personas())
+IO.inspect(CrudInterface.listar(), label: "Personas después de la eliminación")
