@@ -20,7 +20,9 @@ defmodule BusquedaBinaria do
     buscar(lista_ordenada, valor, 0, length(lista_ordenada) - 1)
   end
 
-  defp buscar(lista, valor, inicio, fin) when inicio <= fin do
+  defp buscar(_lista, _valor, inicio, fin) when inicio > fin, do: false
+
+  defp buscar(lista, valor, inicio, fin) do
     medio = div(inicio + fin, 2)
 
     case Enum.at(lista, medio) do
@@ -31,7 +33,6 @@ defmodule BusquedaBinaria do
 
   end
 
-  defp buscar(_lista, _valor, inicio, fin) when inicio > fin, do: false
 
 end
 
@@ -39,7 +40,7 @@ defmodule Main do
 
   def run do
 
-    respuesta = BusquedaBinaria.buscar( [2,3,7,9,1], 21 )
+    respuesta = BusquedaBinaria.buscar( [2,3,7,9,1], 31 )
     IO.puts(respuesta)
 
   end
