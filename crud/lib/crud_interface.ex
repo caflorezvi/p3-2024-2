@@ -1,4 +1,7 @@
 defmodule CrudInterface do
+  @moduledoc """
+    Interfaz para el módulo Crud que permite interactuar con el agente.
+  """
 
   def iniciar do
     Crud.start_link([])
@@ -6,7 +9,7 @@ defmodule CrudInterface do
 
   def crear(id, nombre, edad) do
     case Crud.crear_persona(id, nombre, edad) do
-      :error -> "Ya existe una persona con el mismo ID"
+      {:error, mensaje} -> mensaje
       :ok -> "Persona creada correctamente"
     end
   end
@@ -21,14 +24,14 @@ defmodule CrudInterface do
 
   def actualizar(id, nombre, edad) do
     case Crud.actualizar_persona(id, nombre, edad) do
-      :error -> "El ID no existe"
+      {:error, mensaje} -> mensaje
       :ok -> "Persona actualizada correctamente"
     end
   end
 
   def eliminar(id) do
     case Crud.eliminar_persona(id) do
-      :error -> "El ID no existe"
+      {:error, mensaje} -> mensaje
       :ok -> "Persona eliminada correctamente"
     end
   end
