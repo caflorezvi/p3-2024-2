@@ -49,13 +49,11 @@ defmodule ListaNumeros do
     convertir_numeros( cola, [ convertir_binario(cabeza) | respuesta ] )
   end
 
-  @doc """
-    Función que convierte un número entero a binario.
-  """
   defp convertir_binario(0), do: 0
+  defp convertir_binario(1), do: 1
 
   defp convertir_binario(numero) do
-   rem(numero, 2) + 10 * convertir_binario( div(numero,2) )
+    convertir_binario( div(numero, 2) ) * 10 + rem(numero, 2)
   end
 
 end
@@ -63,7 +61,6 @@ end
 defmodule Main do
 
   def run do
-
     numeros = ListaNumeros.pedir_numeros()
     respuesta = ListaNumeros.convertir_numeros( numeros )
     IO.inspect(respuesta)

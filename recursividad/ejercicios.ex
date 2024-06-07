@@ -188,15 +188,40 @@ defmodule NumeroPerfecto do
 
 end
 
+defmodule Utils do
+
+  def imprimir(mensaje) do
+    mensaje
+    |> IO.puts()
+  end
+
+  def leer(mensaje) do
+    mensaje
+    |> IO.gets()
+    |> String.trim()
+  end
+
+  def leer_numero(mensaje) do
+    mensaje
+    |> leer()
+    |> Integer.parse()
+    |> case do
+      :error -> {:error, "Debe ingresar un número entero"}
+      {numero, _} -> {:ok, numero}
+    end
+
+  end
+
+end
+
 defmodule Main do
   def run do
 
-    IO.puts("Ingrese un número positivo: ")
-    numero = IO.gets("> ") |> String.trim()
+    Utils.imprimir("Ingrese un número positivo: ")
 
-    case Integer.parse(numero) do
-      :error -> IO.puts("Debe ingresar un número entero")
-      {valor, _} -> IO.puts NumeroPerfecto.es_perfecto?(valor)
+    case Utils.leer_numero("> ") do
+      {:error, mensaje} -> Utils.imprimir( mensaje )
+      {:ok, numero} -> Utils.imprimir( "El número #{numero} es perfecto? #{NumeroPerfecto.es_perfecto?(numero)}" )
     end
 
   end
