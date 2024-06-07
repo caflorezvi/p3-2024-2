@@ -26,23 +26,20 @@ defmodule BusquedaBinaria do
     medio = div(inicio + fin, 2)
 
     case Enum.at(lista, medio) do
-      x when x == valor -> true
+      ^valor -> true
       x when x > valor -> buscar(lista, valor, inicio, medio - 1)
       _ -> buscar(lista, valor, medio + 1, fin)
     end
 
   end
 
-
 end
 
 defmodule Main do
 
   def run do
-
-    respuesta = BusquedaBinaria.buscar( [2,3,7,9,1], 31 )
+    respuesta = BusquedaBinaria.buscar( [2,3,7,9,1], 2 )
     IO.puts(respuesta)
-
   end
 
 end
