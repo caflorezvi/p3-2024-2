@@ -13,7 +13,7 @@ defmodule ListaNumeros do
 
   defp pedir_numeros(lista) do
 
-    IO.puts("Ingresa un número o escribe fin para terminar: ")
+    "Ingresa un número o escribe fin para terminar: " |> IO.puts()
     valor = IO.gets("> ") |> String.trim()
 
     case valor do
@@ -24,7 +24,7 @@ defmodule ListaNumeros do
       _ ->
         case Integer.parse(valor) do
           :error ->
-            IO.puts("Debe ingresar un número entero")
+            "Debe ingresar un número entero" |> IO.puts()
             pedir_numeros(lista)
 
           {numero, _} ->
@@ -41,7 +41,7 @@ defmodule ListaNumeros do
   """
   def convertir_numeros(lista) do
     lista
-    |>Enum.map(&convertir_binario/1)
+    |> Enum.map(&convertir_binario/1)
     |> Enum.reverse()
   end
 
