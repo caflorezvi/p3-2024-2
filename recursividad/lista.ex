@@ -52,12 +52,42 @@ defmodule ListaNumeros do
     convertir_binario( div(numero, 2) ) * 10 + rem(numero, 2)
   end
 
+  @doc """
+    Función que suma los números de una lista. La función utiliza Enum.reduce para sumar los elementos de la lista.
+  """
+  def sumar_numeros_v1(lista) do
+    Enum.reduce(lista, 0, fn x, y -> x + y end)
+  end
+
+  @doc """
+    Función que suma los números de una lista. La función utiliza Enum.reduce y una función anónima para sumar los elementos de la lista.
+  """
+  def sumar_numeros_v2(lista) do
+    Enum.reduce(lista, 0, &( &1 + &2 ))
+  end
+
+  @doc """
+    Función que suma los números de una lista. La función utiliza recursividad para sumar los elementos de la lista.
+  """
+  def sumar_numeros_v3([]), do: 0
+  def sumar_numeros_v3([cabeza | cola]), do: cabeza + sumar_numeros_v3(cola)
+
+  @doc """
+    Función que invierte una lista. La función utiliza recursividad para invertir la lista.
+  """
+  def invertir_lista(lista) do
+    invertir_lista(lista, [])
+  end
+
+  defp invertir_lista([], lista_invertida), do: lista_invertida
+  defp invertir_lista([cabeza | cola], lista_invertida), do: invertir_lista(cola, [cabeza | lista_invertida])
+
 end
 
 defmodule Main do
 
   def run do
-    respuesta = ListaNumeros.pedir_numeros() |> ListaNumeros.convertir_numeros( numeros )
+    respuesta = ListaNumeros.pedir_numeros() |> ListaNumeros.invertir_lista()
     IO.inspect(respuesta)
   end
 

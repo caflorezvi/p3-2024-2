@@ -254,6 +254,25 @@ defmodule NumeroPerfecto do
 
 end
 
+defmodule Potencia do
+  @moduledoc """
+    Módulo que contiene funciones para determinar si un número es potencia de otro.
+  """
+
+  @doc """
+    Función que determina si un número es potencia de otro. Un número n es potencia de b si n = b^k para algún k entero positivo.
+  """
+  def es_potencia?(n, _b) when n == 1, do: true
+  def es_potencia?(n, b) do
+    if rem(n, b) == 0 do
+      es_potencia?(div(n, b), b)
+    else
+      false
+    end
+  end
+
+end
+
 defmodule Utils do
   @moduledoc """
     Módulo que contiene funciones para imprimir y leer datos del usuario.

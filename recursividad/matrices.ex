@@ -35,6 +35,21 @@ defmodule Matrices do
   end
 
   @doc """
+    Función que crea una matriz de tamaño size x size y llena la matriz con los valores de la función valor_celda.
+    La función valor_celda recibe dos parámetros a y b y devuelve el valor que se debe colocar en la celda de la matriz.
+  """
+  def crear_matriz_patron(size) do
+    for i <- 0..(size - 1) do
+      for j <- 0..(size - 1) do
+        valor_celda(size - i, size - j)
+      end
+    end
+  end
+
+  defp valor_celda(a, b) when a >= b, do: a
+  defp valor_celda(_, b), do: b
+
+  @doc """
     Función que imprime una matriz en la consola.
   """
   def imprimir_matriz(matriz) do
@@ -78,6 +93,20 @@ defmodule MatricesRecursividad do
     existe_v2?(matriz, elemento)
   end
 
+  @doc """
+    Función que busca un elemento en una matriz. La función devuelve true si el elemento se encuentra en la matriz y false en caso contrario.
+    Esta versión de la función utiliza List.flatten para convertir la matriz en una lista y luego utiliza Enum.find para buscar el elemento en la lista.
+  """
+  def buscar_elemento_v3(matriz, elemento) do
+    respuesta = matriz |> List.flatten() |> Enum.find( &( &1 == elemento ) )
+
+    case respuesta do
+      nil -> false
+      _ -> true
+    end
+
+  end
+
   defp existe_v1?([], _elemento), do: false
 
   defp existe_v1?([cabeza | cola], elemento) do
@@ -102,12 +131,28 @@ defmodule MatricesRecursividad do
   defp buscar_fila([cabeza | _cola], elemento ) when cabeza == elemento, do: true
   defp buscar_fila([_cabeza | cola], elemento ), do: buscar_fila(cola, elemento )
 
+  def obtener_cadena_mas_larga(matriz) do
+    obtener_cadena_mas_larga(matriz, "")
+  end
+
+  defp obtener_cadena_mas_larga( [], cadena ), do: cadena
+  defp obtener_cadena_mas_larga( [cabeza | cola], cadena ) do
+
+    mas_larga = Enum.max_by(cabeza, &String.length/1 )
+
+    cond do
+      String.length(mas_larga) > String.length(cadena) -> obtener_cadena_mas_larga( cola, mas_larga )
+      true -> obtener_cadena_mas_larga( cola, cadena )
+    end
+
+  end
+
 end
 
 defmodule Main do
 
   def run do
-    Matrices.crear_matriz(4, 5) |> Matrices.llenar_bordes() |> Matrices.imprimir_matriz()
+    Matrices.crear_matriz_patron(6) |> Matrices.imprimir_matriz()
   end
 
 end
@@ -119,12 +164,12 @@ defmodule MainRecursivo do
     suma = MatricesRecursividad.sumar_diagonal( matriz )
     IO.puts("La suma de los elementos de la diagonal principal es: #{suma}")
 
-    matriz2 = [["Carlos", "Juan", "Pedro"], ["Maria", "Luisa", "Carla"]]
-    encontrado = MatricesRecursividad.buscar_elemento_v2(matriz2, "Carlos")
+    matriz2 = [["Carlos Andrés", "Juan", "Pedro"], ["Maria", "Luisa", "Carla"]]
+    encontrado = MatricesRecursividad.obtener_cadena_mas_larga(matriz2)
     IO.puts(encontrado)
 
   end
 
 end
 
-MainRecursivo.run()
+Main.run()
