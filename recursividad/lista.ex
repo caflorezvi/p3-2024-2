@@ -57,8 +57,7 @@ end
 defmodule Main do
 
   def run do
-    numeros = ListaNumeros.pedir_numeros()
-    respuesta = ListaNumeros.convertir_numeros( numeros )
+    respuesta = ListaNumeros.pedir_numeros() |> ListaNumeros.convertir_numeros( numeros )
     IO.inspect(respuesta)
   end
 
