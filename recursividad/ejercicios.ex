@@ -1,5 +1,11 @@
 defmodule Fibonacci do
+  @moduledoc """
+    Módulo que contiene funciones para calcular la serie de Fibonacci. La serie de Fibonacci es una sucesión de números en la que cada número es la suma de los dos anteriores.
+  """
 
+  @doc """
+    Función que calcula el n-ésimo número de la serie de Fibonacci.
+  """
   def calcular_fibonacci(n) when n < 0 do
     {:error, "El número debe ser no negativo"}
   end
@@ -14,7 +20,13 @@ defmodule Fibonacci do
 end
 
 defmodule FibonacciMejorado do
+  @moduledoc """
+    Módulo que contiene funciones para calcular la serie de Fibonacci de manera más eficiente.
+  """
 
+  @doc """
+    Función que calcula el n-ésimo número de la serie de Fibonacci.
+  """
   def calcular_fibonacci(n) when n < 0 do
     {:error, "El número debe ser no negativo"}
   end
@@ -35,7 +47,13 @@ defmodule FibonacciMejorado do
 end
 
 defmodule Factorial do
+  @moduledoc """
+    Módulo que contiene funciones para calcular el factorial de un número. El factorial de un número es el producto de todos los números enteros positivos desde 1 hasta el número.
+  """
 
+  @doc """
+    Función que calcula el factorial de un número.
+  """
   def calcular_factorial(0), do: 1
   def calcular_factorial(1), do: 1
 
@@ -46,7 +64,13 @@ defmodule Factorial do
 end
 
 defmodule MenorArreglo do
+  @moduledoc """
+    Módulo que contiene funciones para obtener el menor número de una lista.
+  """
 
+  @doc """
+    Función que obtiene el menor número de una lista.
+  """
   def obtener_menor([]), do: {:error, "La lista está vacía"}
 
   def obtener_menor( [cabeza | cola] ) do
@@ -63,6 +87,9 @@ defmodule MenorArreglo do
 
   defp obtener_menor([], menor), do: menor
 
+  @doc """
+    Función que obtiene el menor número de una lista utilizando la función Enum.min/1.
+  """
   def obtener_menor_bib(lista) do
     Enum.min(lista)
   end
@@ -70,7 +97,13 @@ defmodule MenorArreglo do
 end
 
 defmodule Multiplicacion do
+  @moduledoc """
+    Módulo que contiene funciones para multiplicar dos números enteros.
+  """
 
+  @doc """
+    Función que multiplica dos números enteros.
+  """
   def multiplicar(0, _b), do: 0
   def multiplicar(_a, 0), do: 0
 
@@ -81,7 +114,13 @@ defmodule Multiplicacion do
 end
 
 defmodule Division do
+  @moduledoc """
+    Módulo que contiene funciones para dividir dos números enteros.
+  """
 
+  @doc """
+    Función que divide dos números enteros.
+  """
   def dividir(_a, 0), do: {:error, "La división es indeterminada"}
 
   def dividir(a, b) do
@@ -100,7 +139,13 @@ defmodule Division do
 end
 
 defmodule Lista do
+  @moduledoc """
+    Módulo que contiene funciones para trabajar con listas.
+  """
 
+  @doc """
+    Función que cuenta las repeticiones de un número en una lista.
+  """
   def contar_repeticiones([cabeza | cola], numero) do
     if cabeza == numero do
       1 + contar_repeticiones(cola, numero)
@@ -111,6 +156,9 @@ defmodule Lista do
 
   def contar_repeticiones([], _numero), do: 0
 
+  @doc """
+    Función que cuenta las repeticiones de un número en una lista utilizando la función Enum.count/2.
+  """
   def contar_repeticiones_bib(lista, numero) do
     Enum.count(lista, fn x -> x == numero end)
   end
@@ -118,7 +166,13 @@ defmodule Lista do
 end
 
 defmodule Palindroma do
+  @moduledoc """
+    Módulo que contiene funciones para determinar si una cadena es palíndroma. Un palíndromo es una palabra o frase que se lee igual de izquierda a derecha que de derecha a izquierda.
+  """
 
+  @doc """
+    Función que determina si una cadena es palíndroma.
+  """
   def validar_cadena(cadena) do
     normalizada = cadena
                   |> String.downcase()
@@ -142,7 +196,13 @@ defmodule Palindroma do
 end
 
 defmodule PalindromaLista do
+  @moduledoc """
+    Módulo que contiene funciones para determinar si una cadena es palíndroma utilizando listas. Un palíndromo es una palabra o frase que se lee igual de izquierda a derecha que de derecha a izquierda.
+  """
 
+  @doc """
+    Función que determina si una cadena es palíndroma.
+  """
   def validar_cadena(cadena) do
 
     normalizada = cadena
@@ -169,7 +229,13 @@ defmodule PalindromaLista do
 end
 
 defmodule NumeroPerfecto do
+  @moduledoc """
+    Módulo que contiene funciones para determinar si un número es perfecto. Un número es perfecto si la suma de sus divisores es igual al número.
+  """
 
+  @doc """
+    Función que determina si un número es perfecto.
+  """
   def es_perfecto?(numero) when numero <= 0, do: false
 
   def es_perfecto?(numero) do
@@ -189,18 +255,30 @@ defmodule NumeroPerfecto do
 end
 
 defmodule Utils do
+  @moduledoc """
+    Módulo que contiene funciones para imprimir y leer datos del usuario.
+  """
 
+  @doc """
+    Función que imprime un mensaje en la consola.
+  """
   def imprimir(mensaje) do
     mensaje
     |> IO.puts()
   end
 
+  @doc """
+    Función que lee un mensaje del usuario.
+  """
   def leer(mensaje) do
     mensaje
     |> IO.gets()
     |> String.trim()
   end
 
+  @doc """
+    Función que lee un número entero del usuario.
+  """
   def leer_numero(mensaje) do
     mensaje
     |> leer()
