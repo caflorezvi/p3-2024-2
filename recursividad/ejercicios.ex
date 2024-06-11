@@ -311,6 +311,44 @@ defmodule Utils do
 
 end
 
+defmodule Repeticiones do
+  @moduledoc """
+    Módulo que contiene funciones para contar las repeticiones de letras en una lista de palabras.
+  """
+
+  @doc """
+    Función que cuenta las repeticiones de letras en una lista de palabras. Y devuelve la letra que más se repite.
+  """
+  def obtener_letra_mayor_frecuencia(lista) do
+    recorrer_lista(lista, %{})
+    |> letra_mas_repetida()
+  end
+
+  defp recorrer_lista([], memo), do: memo
+
+  defp recorrer_lista([cabeza | cola], memo) do
+    # Convertir la palabra a minúsculas
+    palabra = String.downcase(cabeza)
+    nuevo_memo = contar_letra(palabra, memo)
+    recorrer_lista(cola, nuevo_memo)
+  end
+
+  defp contar_letra(palabra, memo) when palabra == "", do: memo
+
+  defp contar_letra(palabra, memo) do
+    letra = String.first(palabra)
+    # Si la letra no está en el mapa, se agrega con valor 1, si ya está se incrementa en 1
+    nuevo_memo = Map.update(memo, letra, 1, &(&1 + 1))
+    contar_letra( String.slice(palabra, 1..-1//1), nuevo_memo)
+  end
+
+  defp letra_mas_repetida(memo) do
+    memo
+    |> Enum.max_by( fn {_letra, total} -> total end )
+  end
+
+end
+
 defmodule Main do
   def run do
 
