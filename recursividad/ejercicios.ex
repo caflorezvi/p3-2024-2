@@ -319,9 +319,16 @@ defmodule Repeticiones do
   @doc """
     Función que cuenta las repeticiones de letras en una lista de palabras. Y devuelve la letra que más se repite.
   """
-  def obtener_letra_mayor_frecuencia(lista) do
+  def obtener_letra_mayor_frecuencia_v1(lista) do
     recorrer_lista(lista, %{})
     |> letra_mas_repetida()
+  end
+
+  def obtener_letra_mayor_frecuencia_v2(lista) do
+    lista
+    |> Enum.flat_map( &String.graphemes/1 )
+    |> Enum.frequencies()
+    |> Enum.max_by( &elem(&1, 1) )
   end
 
   defp recorrer_lista([], memo), do: memo
