@@ -4,20 +4,26 @@ defmodule EjemploComunicacion do
   """
 
   @doc """
-    Proceso 1 recibe un mensaje
+    Proceso 1 recibe un mensaje y envía una confirmación
   """
   def proceso1 do
     receive do
-      {:mensaje, msg} ->
+      {:mensaje, msg, pid} ->
         IO.puts "Proceso 1 recibió el mensaje: #{msg}"
+        send(pid, :confirmacion)
     end
   end
 
   @doc """
-    Proceso 2 envía un mensaje a proceso 1
+    Proceso 2 envía un mensaje a proceso 1 y espera confirmación
   """
   def proceso2(pid) do
-    send(pid, {:mensaje, "Hola desde proceso 2"})
+    send(pid, {:mensaje, "Hola desde proceso 2", self()})
+
+    receive do
+      :confirmacion ->
+        IO.puts "Proceso 2 recibió confirmación de proceso 1"
+    end
   end
 
   @doc """
