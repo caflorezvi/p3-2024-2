@@ -6,12 +6,12 @@ defmodule BusquedaConcurrente do
   @doc """
     Crea una lista con elementos del 1 al número de elementos especificado.
   """
-  def crear_lista(numeros), do: Enum.to_list(1..numeros)
+  def crear_lista(numeros), do: 1..numeros |> Enum.to_list()
 
   @doc """
     Busca un número en una lista de forma concurrente.
   """
-  def buscar_numero(lista, numero) do
+  def buscar_numero_v1(lista, numero) do
 
     # Se divide la lista en cuatro partes
     partes = Enum.chunk_every(lista, div(length(lista), 4))
@@ -31,18 +31,70 @@ defmodule BusquedaConcurrente do
   @doc """
     Busca un número en una parte de una lista. Devuelve true si el número se encuentra en la parte.
   """
-  def buscar_parte(parte, numero), do: Enum.member?(parte, numero)
+  def buscar_parte(parte, numero, mensaje\\"") do
+    {tiempo, existe} = :timer.tc(fn ->
+      Enum.member?(parte, numero)
+    end)
+    IO.puts("#{mensaje} - Tiempo de búsqueda: #{tiempo}")
+    existe
+  end
+
+  @doc """
+    Busca un número en una lista de forma concurrente, utilizando un supervisor para detener las tareas que no encuentren el número.
+  """
+  def buscar_numero_v2(lista, numero) do
+
+    # Se divide la lista en cuatro partes
+    partes = Enum.chunk_every(lista, div(length(lista), 4))
+
+    # Se crea un supervisor para las tareas
+    supervisor = self()
+
+    # Por cada parte se crea una tarea que buscará el número y enviará un mensaje al supervisor si lo encuentra
+    tareas = Enum.map(partes, fn parte ->
+      Task.async( fn ->
+        existe = buscar_parte(parte, numero, "Concurrencia parte #{List.first(parte)}")
+        send(supervisor, {:encontrado, existe, self()})
+      end )
+    end )
+
+    esperar_respuesta(tareas, length(tareas))
+
+  end
+
+  @doc """
+    Espera a que una de las tareas envíe un mensaje al supervisor. Si la tarea encuentra el número, se detienen las demás tareas.
+  """
+  def esperar_respuesta(_tareas, 0), do: false
+
+  def esperar_respuesta(tareas, tareas_restantes) do
+
+    # Se recibe el mensaje de la primera tarea que encuentre el número y se detienen las demás
+    receive do
+      {:encontrado, true, pid} ->
+        # Se detienen las tareas que no encontraron el número
+        Enum.each(tareas, fn tarea -> if tarea.pid != pid, do: Task.shutdown(tarea, :brutal_kill) end)
+        true
+      {:encontrado, false, _pid} ->
+        # Se espera a que las demás tareas finalicen
+        esperar_respuesta(tareas, tareas_restantes - 1)
+    end
+
+  end
 
 end
 
 defmodule Main do
 
   def run do
-    numero = 2
-    respuesta = BusquedaConcurrente.crear_lista(10000000)
-    |> BusquedaConcurrente.buscar_numero(numero)
+    numero = 2500002
+    lista = BusquedaConcurrente.crear_lista(10000000)
 
-    IO.puts("¿Se ha encontrado el número #{numero}? #{respuesta}")
+    resp1 = BusquedaConcurrente.buscar_parte(lista, numero, "Sin concurrencia")
+    resp2 = BusquedaConcurrente.buscar_numero_v2(lista, numero)
+
+    IO.puts("Sin concurrencia, ¿Existe? : #{resp1}")
+    IO.puts("Con concurrencia, ¿Existe? : #{resp2}")
 
   end
 
