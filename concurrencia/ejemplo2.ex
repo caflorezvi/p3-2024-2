@@ -31,13 +31,7 @@ defmodule BusquedaConcurrente do
   @doc """
     Busca un número en una parte de una lista. Devuelve true si el número se encuentra en la parte.
   """
-  def buscar_parte(parte, numero, mensaje\\"") do
-    {tiempo, existe} = :timer.tc(fn ->
-      Enum.member?(parte, numero)
-    end)
-    IO.puts("#{mensaje} - Tiempo de búsqueda: #{tiempo}")
-    existe
-  end
+  def buscar_parte(parte, numero), do: Enum.member?(parte, numero)
 
   @doc """
     Busca un número en una lista de forma concurrente, utilizando un supervisor para detener las tareas que no encuentren el número.
@@ -53,13 +47,17 @@ defmodule BusquedaConcurrente do
     # Por cada parte se crea una tarea que buscará el número y enviará un mensaje al supervisor si lo encuentra
     tareas = Enum.map(partes, fn parte ->
       Task.async( fn ->
-        existe = buscar_parte(parte, numero, "Concurrencia parte #{List.first(parte)}")
+        existe = buscar_parte(parte, numero)
         send(supervisor, {:encontrado, existe, self()})
       end )
     end )
 
-    esperar_respuesta(tareas, length(tareas))
+    {tiempo, respuesta} = :timer.tc(fn ->
+      esperar_respuesta(tareas, length(tareas))
+    end)
 
+    IO.puts("Tiempo de ejecución con concurrencia: #{tiempo/1000000} segundos")
+    respuesta
   end
 
   @doc """
@@ -71,9 +69,9 @@ defmodule BusquedaConcurrente do
 
     # Se recibe el mensaje de la primera tarea que encuentre el número y se detienen las demás
     receive do
-      {:encontrado, true, pid} ->
+      {:encontrado, true, _pid} ->
         # Se detienen las tareas que no encontraron el número
-        Enum.each(tareas, fn tarea -> if tarea.pid != pid, do: Task.shutdown(tarea, :brutal_kill) end)
+        # Enum.each(tareas, fn tarea -> if tarea.pid != pid, do: Task.shutdown(tarea) end)
         true
       {:encontrado, false, _pid} ->
         # Se espera a que las demás tareas finalicen
@@ -87,10 +85,15 @@ end
 defmodule Main do
 
   def run do
-    numero = 2500002
+    numero = 5000002
     lista = BusquedaConcurrente.crear_lista(10000000)
 
-    resp1 = BusquedaConcurrente.buscar_parte(lista, numero, "Sin concurrencia")
+    {tiempo, resp1} = :timer.tc(fn ->
+      BusquedaConcurrente.buscar_parte(lista, numero)
+    end)
+
+    IO.puts("Tiempo de ejecución sin concurrencia: #{tiempo/1000000} segundos")
+
     resp2 = BusquedaConcurrente.buscar_numero_v2(lista, numero)
 
     IO.puts("Sin concurrencia, ¿Existe? : #{resp1}")
