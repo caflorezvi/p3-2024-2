@@ -20,11 +20,16 @@ defmodule BusquedaConcurrente do
     tareas = partes
     |> Enum.map( fn parte -> Task.async( fn -> buscar_parte(parte, numero) end ) end )
 
-    # Se espera a que todas las tareas finalicen y se obtiene el resultado de cada una
-    resultado = tareas |> Enum.map( &Task.await/1 )
+    # Se calcula el tiempo de ejecución y se espera a que todas las tareas finalicen
+    {tiempo, respuesta} = :timer.tc(fn ->
+      # Se espera a que todas las tareas finalicen y se obtiene el resultado de cada una
+      resultado = tareas |> Enum.map( &Task.await/1 )
+      # Se devuelve true si el número se encuentra en alguna parte de la lista.
+      Enum.any?(resultado)
+    end)
 
-    # Se devuelve true si el número se encuentra en alguna parte de la lista.
-    Enum.any?(resultado)
+    IO.puts("Tiempo de ejecución con concurrencia (sin interrupción): #{tiempo/1000000} segundos")
+    respuesta
 
   end
 
@@ -52,11 +57,12 @@ defmodule BusquedaConcurrente do
       end )
     end )
 
+    # Se calcula el tiempo de ejecución y se espera a que una de las tareas envíe un mensaje al supervisor
     {tiempo, respuesta} = :timer.tc(fn ->
       esperar_respuesta(tareas, length(tareas))
     end)
 
-    IO.puts("Tiempo de ejecución con concurrencia: #{tiempo/1000000} segundos")
+    IO.puts("Tiempo de ejecución con concurrencia (con interrupción): #{tiempo/1000000} segundos")
     respuesta
   end
 
@@ -85,7 +91,7 @@ end
 defmodule Main do
 
   def run do
-    numero = 5000002
+    numero = 2500002
     lista = BusquedaConcurrente.crear_lista(10000000)
 
     {tiempo, resp1} = :timer.tc(fn ->
@@ -95,9 +101,11 @@ defmodule Main do
     IO.puts("Tiempo de ejecución sin concurrencia: #{tiempo/1000000} segundos")
 
     resp2 = BusquedaConcurrente.buscar_numero_v2(lista, numero)
+    resp3 = BusquedaConcurrente.buscar_numero_v1(lista, numero)
 
     IO.puts("Sin concurrencia, ¿Existe? : #{resp1}")
-    IO.puts("Con concurrencia, ¿Existe? : #{resp2}")
+    IO.puts("Con concurrencia (con interrupción), ¿Existe? : #{resp2}")
+    IO.puts("Con concurrencia (sin interrupción), ¿Existe? : #{resp3}")
 
   end
 
