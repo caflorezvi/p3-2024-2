@@ -346,7 +346,7 @@ defmodule Repeticiones do
     letra = String.first(palabra)
     # Si la letra no está en el mapa, se agrega con valor 1, si ya está se incrementa en 1
     nuevo_memo = Map.update(memo, letra, 1, &(&1 + 1))
-    contar_letra( String.slice(palabra, 1..-1//1), nuevo_memo)
+    contar_letra( String.slice(palabra, 1..-1), nuevo_memo)
   end
 
   defp letra_mas_repetida(memo) do
