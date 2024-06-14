@@ -35,6 +35,24 @@ IO.inspect(tl(lista))
 
 IO.puts("--------------------")
 
+# Modificar un elemento de la lista
+lista_modificada = List.replace_at(lista, 2, 10)
+
+# Imprimir la lista modificada
+IO.puts("Lista modificada:")
+IO.inspect(lista_modificada)
+
+IO.puts("--------------------")
+
+# Eliminar un elemento de la lista
+lista_eliminada = List.delete_at(lista, 2)
+
+# Imprimir la lista eliminada
+IO.puts("Lista eliminada:")
+IO.inspect(lista_eliminada)
+
+IO.puts("--------------------")
+
 # Hacer pattern matching con la lista
 [primer_elemento | resto_lista] = lista
 
@@ -71,6 +89,9 @@ end
 IO.puts("--------------------")
 
 # Usando diferentes funciones del módulo Enum
+
+# Obtener el índice de un elemento en la lista
+IO.puts("Indice del elemento 3: #{Enum.find_index(lista, &(&1 == 3))}")
 
 # Obtener la longitud de la lista
 IO.puts("Longitud de la lista con enum: #{Enum.count(lista)}")
