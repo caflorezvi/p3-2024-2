@@ -82,7 +82,7 @@ nombre_mayusculas = nombre |> String.upcase() # Equivalente a String.upcase(nomb
 
 "Lenguaje de programación Elixir"  |> String.upcase() |> String.split() # ["LENGUAJE", "DE", "PROGRAMACIÓN", "ELIXIR"]
 
-# Operador ^. El operador ^ se utiliza para acceder a variables en patrones de coincidencia. El operador ^ se utiliza para evitar la reasignación de variables en patrones de coincidencia. El operador ^ se utiliza para acceder a variables en patrones de coincidencia.
+# Operador ^. El operador ^ se utiliza para acceder a variables en patrones de coincidencia. El operador ^ se utiliza para evitar la reasignación de variables en patrones de coincidencia.
 
 # Asignamos un valor a la variable x
 x = 10
