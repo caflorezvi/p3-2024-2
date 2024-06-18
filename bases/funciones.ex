@@ -146,6 +146,23 @@ defmodule Loteria do
 
 end
 
+defmodule FuncionesOrdenSuperior do
+  @moduledoc """
+    Módulo que contiene funciones de orden superior. Una función de orden superior es una función que toma una o más funciones como argumentos y/o devuelve una función como resultado.
+  """
+
+  @doc """
+    Función que aplica una operación a dos números. Se usa el concepto de función de orden superior. La función aplicar_operacion toma dos números y una función como argumentos y devuelve el resultado de aplicar la función a los dos números.
+  """
+  def aplicar_operacion(a, b, operacion) do
+    operacion.(a, b)
+  end
+
+  def suma(a, b), do: a + b
+  def multiplicar(a, b), do: a * b
+
+end
+
 # Llamando a la función suma del módulo Funciones
 IO.puts( Funciones.suma(1, 2) ) # 3
 
@@ -173,3 +190,7 @@ IO.puts( Funciones.indicar_rango_edad(10) ) # Menor de edad
 
 # Llamando a la función validar_numero del módulo Loteria
 Loteria.validar_numero
+
+# Llamando a la función aplicar_operacion del módulo FuncionesOrdenSuperior
+resultado = FuncionesOrdenSuperior.aplicar_operacion(2, 3, &FuncionesOrdenSuperior.suma/2)
+IO.puts( "El resultado de la suma de 2 y 3 es: #{resultado}" ) # 5
