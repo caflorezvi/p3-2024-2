@@ -158,7 +158,7 @@ defmodule FuncionesOrdenSuperior do
     operacion.(a, b)
   end
 
-  def suma(a, b), do: a + b
+  def sumar(a, b), do: a + b
   def multiplicar(a, b), do: a * b
 
 end
@@ -192,5 +192,5 @@ IO.puts( Funciones.indicar_rango_edad(10) ) # Menor de edad
 Loteria.validar_numero
 
 # Llamando a la función aplicar_operacion del módulo FuncionesOrdenSuperior
-resultado = FuncionesOrdenSuperior.aplicar_operacion(2, 3, &FuncionesOrdenSuperior.suma/2)
+resultado = FuncionesOrdenSuperior.aplicar_operacion(2, 3, &FuncionesOrdenSuperior.sumar/2)
 IO.puts( "El resultado de la suma de 2 y 3 es: #{resultado}" ) # 5
