@@ -6,7 +6,7 @@
 # Números
 
 # En Elixir, los números son enteros o flotantes. Los enteros son números sin decimales y los flotantes son números con decimales. Los números enteros pueden ser positivos o negativos. Los flotantes pueden ser positivos o negativos y pueden tener decimales. Los números enteros y flotantes son de precisión arbitraria, lo que significa que no hay un límite en el tamaño de los números enteros o flotantes. Los números enteros y flotantes se pueden representar en notación decimal, hexadecimal, octal y binaria.
-a = 1 # Entero
+a = 1 # Entero, se puede usar _ para separar los dígitos para mejorar la legibilidad (1_000_000)
 b = 3.0 # Flotante
 
 # Operaciones aritméticas
