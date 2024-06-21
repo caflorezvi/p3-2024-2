@@ -14,7 +14,7 @@ defmodule Nodo1 do
     Node.set_cookie(:secretcookie)
 
     # Conectar nodo 1 con nodo 2 usando la dirección del nodo 2.
-    Node.connect(:'nodo2@localhost')
+    Node.connect(:nodo2@localhost)
 
     # Envía un mensaje al nodo 2
     enviar_mensaje()
@@ -23,7 +23,7 @@ defmodule Nodo1 do
 
   defp enviar_mensaje do
     texto = "Escribe un mensaje para enviar al otro nodo: " |> IO.gets() |> String.trim()
-    send({:recibir, :'nodo2@localhost'}, {:mensaje, texto})
+    send({:recibir, :nodo2@localhost}, {:mensaje, texto})
   end
 
 end
