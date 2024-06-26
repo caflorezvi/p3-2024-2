@@ -1,28 +1,50 @@
-# Inicia el agente
-CrudInterface.iniciar()
+defmodule AplicacionCrud do
+  @moduledoc """
+    Módulo principal de la aplicación. Inicia el agente y realiza operaciones CRUD.
+  """
 
-# Crear personas
-CrudInterface.crear("123", "Alice", 30)
-CrudInterface.crear("456", "Bob", 25)
-CrudInterface.crear("678", "Carlos", 30)
+  # Application es un módulo de Elixir que se utiliza para definir la aplicación principal.
+  use Application
 
-# Crear una persona con un ID inexistente
-IO.inspect(CrudInterface.crear("123", "Juanita", 21))
+  @impl true
+  def start(_type, _args) do
 
-# Leer todas las personas
-IO.inspect(CrudInterface.listar(), label: "Personas después de la creación")
+    # Inicia el agente
+    {:ok, pid} = CrudInterface.iniciar()
 
-# Actualizar una persona por ID
-CrudInterface.actualizar("123", "Alice", 31)
+    # Crear personas
+    CrudInterface.crear("123", "Alice", 30)
+    CrudInterface.crear("456", "Bob", 25)
+    CrudInterface.crear("678", "Carlos", 30)
 
-# Leer todas las personas
-IO.inspect(CrudInterface.listar(), label: "Personas después de la actualización")
+    # Crear una persona con un ID inexistente
+    IO.inspect(CrudInterface.crear("123", "Juanita", 21))
 
-# Eliminar una persona por ID
-CrudInterface.eliminar("123")
+    # Leer todas las personas
+    IO.inspect(CrudInterface.listar(), label: "Personas después de la creación")
 
-# Eliminar una persona con un ID inexistente
-IO.inspect(CrudInterface.eliminar("1234"))
+    # Actualizar una persona por ID
+    CrudInterface.actualizar("123", "Alice", 31)
 
-# Leer todas las personas
-IO.inspect(CrudInterface.listar(), label: "Personas después de la eliminación")
+    # Leer todas las personas
+    IO.inspect(CrudInterface.listar(), label: "Personas después de la actualización")
+
+    # Eliminar una persona por ID
+    CrudInterface.eliminar("123")
+
+    # Eliminar una persona con un ID inexistente
+    IO.inspect(CrudInterface.eliminar("1234"))
+
+    # Leer todas las personas
+    IO.inspect(CrudInterface.listar(), label: "Personas después de la eliminación")
+
+    # Termina la aplicación
+    System.stop(0)
+
+    {:ok, pid}
+  end
+
+end
+
+# mix compile
+# mix run --no-halt

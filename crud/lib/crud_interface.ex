@@ -4,7 +4,11 @@ defmodule CrudInterface do
   """
 
   def iniciar do
-    Crud.start_link([])
+    Crud.iniciar([])
+  end
+
+  def detener do
+    Crud.detener()
   end
 
   def crear(id, nombre, edad) do
