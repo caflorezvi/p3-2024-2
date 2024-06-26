@@ -47,31 +47,24 @@ defmodule Archivos do
     end
   end
 
-  @doc """
-    Función que escribe un contenido en un archivo llamado salida.txt.
+end
+
+defmodule Main do
+  @moduledoc """
+    Módulo principal que ejecuta las funciones de Archivos.
   """
-  def escribir_archivo(contenido) do
-    # Se utiliza un bloque try para manejar la excepción File.Error que se lanza al intentar escribir un archivo.
-    case  File.write("salida.txt", contenido) do
-      :ok ->
-        IO.puts "Archivo escrito con éxito"
-      {:error, reason} ->
-        IO.puts "Error al escribir el archivo: #{reason}"
-    end
+
+  @doc """
+    Función que ejecuta las funciones de Archivos.
+  """
+  def run do
+    Archivos.leer_archivo_v2()
+    IO.puts("--------------------")
+    Archivos.leer_archivo_linea_por_linea_v1()
+    IO.puts("--------------------")
+    Archivos.leer_archivo_linea_por_linea_v2()
   end
 
 end
 
-Archivos.leer_archivo_v2()
-
-IO.puts("--------------------")
-
-Archivos.leer_archivo_linea_por_linea_v1()
-
-IO.puts("--------------------")
-
-Archivos.leer_archivo_linea_por_linea_v2()
-
-IO.puts("--------------------")
-
-Archivos.escribir_archivo("¡Hola, Mundo!\n")
+Main.run()
