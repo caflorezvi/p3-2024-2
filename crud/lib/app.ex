@@ -38,9 +38,6 @@ defmodule AplicacionCrud do
     # Leer todas las personas
     IO.inspect(CrudInterface.listar(), label: "Personas después de la eliminación")
 
-    # Termina la aplicación
-    System.stop(0)
-
     {:ok, pid}
   end
 
