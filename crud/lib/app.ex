@@ -10,7 +10,7 @@ defmodule AplicacionCrud do
   def start(_type, _args) do
 
     # Inicia el agente
-    {:ok, pid} = CrudInterface.iniciar()
+    {:ok, _pid} = CrudInterface.iniciar()
 
     # Crear personas
     CrudInterface.crear("123", "Alice", 30)
@@ -38,7 +38,7 @@ defmodule AplicacionCrud do
     # Leer todas las personas
     IO.inspect(CrudInterface.listar(), label: "Personas después de la eliminación")
 
-    {:ok, pid}
+    {:ok, self()}
   end
 
 end

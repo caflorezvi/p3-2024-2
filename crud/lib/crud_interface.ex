@@ -4,7 +4,7 @@ defmodule CrudInterface do
   """
 
   def iniciar do
-    Crud.iniciar([])
+    Crud.iniciar()
   end
 
   def detener do

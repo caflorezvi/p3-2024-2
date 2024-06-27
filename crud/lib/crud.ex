@@ -7,14 +7,14 @@ defmodule Crud do
   @doc """
     Inicia el agente con un mapa vacío.
   """
-  def iniciar(_) do
+  def iniciar do
     Agent.start_link(fn -> %{} end, name: __MODULE__)
   end
 
   @doc """
-    Detiene el agente.
+    Detiene el agente. Es importante detener el agente cuando ya no se necesite para liberar recursos.
   """
-  def detener() do
+  def detener do
     Agent.stop(__MODULE__)
   end
 
