@@ -31,8 +31,8 @@ defmodule PongServer do
     # Imprime un mensaje en la consola
     IO.puts("Pong: Recibido ping #{contador} desde #{from_node}")
 
-    # Conecta el nodo actual con el nodo Ping
-    Node.connect(from_node)
+    # Conecta el nodo actual con el nodo Ping (si están en redes diferentes)
+    #Node.connect(from_node)
 
     # Envia un mensaje al proceso Ping
     GenServer.cast({:ping_server, from_node}, {:pong, Node.self()})
