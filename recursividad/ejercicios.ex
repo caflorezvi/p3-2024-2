@@ -146,15 +146,9 @@ defmodule Lista do
   @doc """
     Función que cuenta las repeticiones de un número en una lista.
   """
-  def contar_repeticiones([cabeza | cola], numero) do
-    if cabeza == numero do
-      1 + contar_repeticiones(cola, numero)
-    else
-      contar_repeticiones(cola, numero)
-    end
-  end
-
   def contar_repeticiones([], _numero), do: 0
+  def contar_repeticiones([cabeza | cola], numero) when cabeza == numero, do: 1 + contar_repeticiones(cola, numero)
+  def contar_repeticiones([_ | cola], numero), do: contar_repeticiones(cola, numero)
 
   @doc """
     Función que cuenta las repeticiones de un número en una lista utilizando la función Enum.count/2.
@@ -181,15 +175,12 @@ defmodule Palindroma do
     es_palindroma?(normalizada, 0, String.length(normalizada) - 1)
   end
 
+  defp es_palindroma?(_, i, j) when i >= j, do: true
   defp es_palindroma?(cadena, i, j) do
-    if i >= j do
-      true
+    if String.at(cadena, i) == String.at(cadena, j) do
+      es_palindroma?(cadena, i+1, j-1)
     else
-      if String.at(cadena, i) == String.at(cadena, j) do
-        es_palindroma?(cadena, i+1, j-1)
-      else
-        false
-      end
+      false
     end
   end
 
@@ -217,13 +208,11 @@ defmodule PalindromaLista do
   defp es_palindroma?([_]), do: true
 
   defp es_palindroma?( [cabeza | cola] ) do
-
     if cabeza == List.last(cola) do
       es_palindroma?( List.delete_at( cola, length(cola)-1 ) )
     else
       false
     end
-
   end
 
 end
@@ -243,14 +232,8 @@ defmodule NumeroPerfecto do
   end
 
   defp sumar_divisores(_numero, 0), do: 0
-
-  defp sumar_divisores(numero, divisor) do
-    if rem(numero, divisor) == 0 do
-      divisor + sumar_divisores(numero, divisor-1)
-    else
-      sumar_divisores(numero, divisor-1)
-    end
-  end
+  defp sumar_divisores(numero, divisor) when rem(numero, divisor) == 0, do: divisor + sumar_divisores(numero, divisor-1)
+  defp sumar_divisores(numero, divisor), do: sumar_divisores(numero, divisor-1)
 
 end
 
@@ -263,13 +246,8 @@ defmodule Potencia do
     Función que determina si un número es potencia de otro. Un número n es potencia de b si n = b^k para algún k entero positivo.
   """
   def es_potencia?(n, _b) when n == 1, do: true
-  def es_potencia?(n, b) do
-    if rem(n, b) == 0 do
-      es_potencia?(div(n, b), b)
-    else
-      false
-    end
-  end
+  def es_potencia?(n, b) when rem(n, b) != 0, do: false
+  def es_potencia?(n, b), do: es_potencia?(div(n, b), b)
 
 end
 
